@@ -63,6 +63,13 @@ Zweites Stück dieser Linie ist
 anderen eigenen Schwäche (Zustandsraum wächst mit der Anzahl Auftragstypen,
 nicht mit der Rollenbreite).
 
+Drittes Stück, ein unabhängiger Zweig direkt von dieser Wurzel, ist
+[cutting-stock-cutting-planes-demo](https://github.com/sebastian-hanisch/cutting-stock-cutting-planes-demo)
+– behebt die oben beschriebene, hier bewusst offen gelassene
+Symmetrie-Schwäche tatsächlich: ein echter, algorithmischer Schnitt, der
+baugleiche offene Bins nicht mehr als eigene Äste erzeugt (statt nur
+diagnostisch per Vergleichs-Zwillingsinstanz zu messen, wie hier).
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
