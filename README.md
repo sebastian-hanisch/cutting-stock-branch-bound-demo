@@ -83,6 +83,12 @@ Fünftes Stück, ein weiterer unabhängiger Zweig direkt von dieser Wurzel, ist
 teilen) als ECHTE, aus der Praxis stammende Nebenbedingung, statt der
 künstlichen Zufalls-Paare aus `constraint-programming-demo` (erste Linie).
 
+Sechstes Stück, [column-generation-demo](https://github.com/sebastian-hanisch/column-generation-demo)
+– das erste dieser Linie mit einem eigenständigen Namen, weil es der
+eigentliche Anlass für die ganze zweite Linie ist: LP + Spaltengenerierung
+über der Gilmore-Gomory-Musterformulierung, die reines Rucksack nicht
+hergibt.
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
