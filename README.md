@@ -70,6 +70,13 @@ Symmetrie-Schwäche tatsächlich: ein echter, algorithmischer Schnitt, der
 baugleiche offene Bins nicht mehr als eigene Äste erzeugt (statt nur
 diagnostisch per Vergleichs-Zwillingsinstanz zu messen, wie hier).
 
+Viertes Stück,
+[cutting-stock-branch-cut-demo](https://github.com/sebastian-hanisch/cutting-stock-branch-cut-demo),
+ist die **Konvergenz** dieser Wurzel mit dem Symmetrie-Schnitt aus Stück 3,
+erweitert um eine an jedem Knoten frisch gelöste LP-Schranke - echtes,
+per-Knoten wiederholtes Branch & Cut, mirror von `branch-cut-demo`s Rolle in
+der ersten Linie.
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
