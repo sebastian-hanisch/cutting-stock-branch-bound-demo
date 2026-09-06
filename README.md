@@ -54,6 +54,15 @@ UI-Umschalter verbaut, sondern als dokumentierte, dauerhaft getestete Erkenntnis
 `csbb_bounds.py` belassen - siehe
 `tests/test_solver.py::test_strong_bound_never_changes_node_count_given_descending_order`.
 
+## Kleine Ergänzung
+
+Zweites Stück dieser Linie ist
+[cutting-stock-dp-demo](https://github.com/sebastian-hanisch/cutting-stock-dp-demo)
+– bewusst als **Kontrast**, nicht als Fix: dieselbe Rolle wie
+`dynamic-programming-demo` in der ersten Linie, aber mit einer grundlegend
+anderen eigenen Schwäche (Zustandsraum wächst mit der Anzahl Auftragstypen,
+nicht mit der Rollenbreite).
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
