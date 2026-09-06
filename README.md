@@ -77,6 +77,12 @@ erweitert um eine an jedem Knoten frisch gelöste LP-Schranke - echtes,
 per-Knoten wiederholtes Branch & Cut, mirror von `branch-cut-demo`s Rolle in
 der ersten Linie.
 
+Fünftes Stück, ein weiterer unabhängiger Zweig direkt von dieser Wurzel, ist
+[cutting-stock-constraint-programming-demo](https://github.com/sebastian-hanisch/cutting-stock-constraint-programming-demo)
+– Materialsorten-Kompatibilität (nur benachbarte Sorten dürfen dieselbe Rolle
+teilen) als ECHTE, aus der Praxis stammende Nebenbedingung, statt der
+künstlichen Zufalls-Paare aus `constraint-programming-demo` (erste Linie).
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
