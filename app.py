@@ -4,7 +4,7 @@ Sebastian Hanisch - Operations Research und Machine Learning
 
 Wurzel der zweiten Exakte-Suche-Linie (Cutting-Stock-Linie): derselbe methodische
 Bogen wie die Rucksack-Linie, aber auf dem klassischen 1D-Cutting-Stock-Problem statt
-Rucksack - Vorbereitung für Column Generation und Branch-and-Price, die eigentlichen
+Rucksack - Vorbereitung für Column Generation und Branch & Price, die eigentlichen
 neuen Stücke dieser Linie.
 
 Lauffähig mit: streamlit run app.py
@@ -63,7 +63,7 @@ st.caption(
     "Anders als die Fall-Demos im Portfolio, die an einem Anwendungsfall mehrere Verfahren "
     "vergleichen, zeigt diese Demo - wie branch-bound-demo aus der ersten Exakte-Suche-Linie - "
     "ein Verfahren an einem wachsenden Beispiel. Bewusst ein zweites, komplexeres Vehikel-"
-    "Problem: die kommenden Stücke dieser Linie (Column Generation, Branch-and-Price) "
+    "Problem: die kommenden Stücke dieser Linie (Column Generation, Branch & Price) "
     "brauchen ein Problem, dessen Struktur reine Rucksack-Instanzen nicht hergeben."
 )
 

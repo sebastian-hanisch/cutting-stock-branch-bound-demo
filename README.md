@@ -11,7 +11,7 @@ methodische Bogen wie die erste Linie ([branch-bound-demo](https://github.com/se
 [constraint-programming-demo](https://github.com/sebastian-hanisch/constraint-programming-demo)),
 aber auf einem zweiten Vehikel-Problem: dem klassischen **1D-Cutting-Stock-Problem**
 (ein Rollentyp, mehrere Auftragsbreiten und -mengen). Der Anlass für die zweite Linie:
-**Column Generation** und **Branch-and-Price** brauchen ein Problem mit einer
+**Column Generation** und **Branch & Price** brauchen ein Problem mit einer
 natürlich exponentiell großen Musterformulierung - das gibt reines Rucksack nicht her.
 
 Nicht zu verwechseln mit der bereits bestehenden **Fall-Demo**
