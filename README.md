@@ -89,6 +89,12 @@ eigentliche Anlass für die ganze zweite Linie ist: LP + Spaltengenerierung
 über der Gilmore-Gomory-Musterformulierung, die reines Rucksack nicht
 hergibt.
 
+Siebtes und **letztes** Stück,
+[branch-and-price-demo](https://github.com/sebastian-hanisch/branch-and-price-demo)
+– die Konvergenz von Verzweigung und Spaltengenerierung mit echter
+Ryan-Foster-Verzweigung, löst exakt das, was `column-generation-demo` ehrlich
+offen ließ. Damit ist diese siebenteilige Cutting-Stock-Linie vollständig.
+
 ## Verifikation
 
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
