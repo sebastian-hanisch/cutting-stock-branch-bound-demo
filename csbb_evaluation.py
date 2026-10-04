@@ -1,11 +1,13 @@
 """Kennzahlen aus einem Suchlauf, plus der "Was kostet Symmetrie wirklich?"-
-Vergleich: dieselbe Instanz einmal normal, einmal mit künstlich aufgebrochener
-Symmetrie (siehe csbb_scenario.desymmetrized_instance) gelöst."""
+Vergleich: dieselbe Instanz mit derselben Schranke einmal normal, einmal mit
+zusammengefassten Bins gleicher Restkapazität gelöst (`solve(..., skip_equivalent_bins=True)`).
+Die Instanz selbst wird NICHT verändert - ein früherer Ansatz mit leicht verschobenen
+Breiten ("Zwillingsinstanz") veränderte Passungen und Schranken und maß deshalb
+etwas anderes als Symmetrie."""
 
 from collections import Counter
 
 from csbb_constants import MAX_NODES_EXPLORED
-from csbb_scenario import desymmetrized_instance
 from csbb_solver import solve
 
 
@@ -35,8 +37,7 @@ def stats_up_to_step(result, step):
 
 def symmetry_comparison(instance, bound_fn, max_nodes=MAX_NODES_EXPLORED):
     normal_result = solve(instance, bound_fn, max_nodes=max_nodes)
-    desym_instance = desymmetrized_instance(instance)
-    desym_result = solve(desym_instance, bound_fn, max_nodes=max_nodes)
+    desym_result = solve(instance, bound_fn, max_nodes=max_nodes, skip_equivalent_bins=True)
     return {
         "normal_nodes": len(normal_result.nodes),
         "normal_best": normal_result.best_value,

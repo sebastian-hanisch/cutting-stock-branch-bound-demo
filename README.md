@@ -33,10 +33,23 @@ geöffnet.
 
 Bin Packing ist berüchtigt dafür, dass austauschbare (symmetrische) Bins den
 Suchbaum unnötig aufblähen. Diese Demo baut das absichtlich NICHT weg - siehe den
-live-berechneten "Wie viel kostet Symmetrie wirklich?"-Vergleich in der App (bis zu
-~13× mehr Knoten bei spürbarer Symmetrie im eigenen Preset). Das ist der direkte
-Aufhänger für das nächste Stück dieser Linie, `cutting-stock-cutting-planes-demo`
+live-berechneten "Wie viel kostet Symmetrie wirklich?"-Vergleich in der App: dieselbe
+Instanz, dieselbe Schranke, einmal normal und einmal mit zusammengefassten
+austauschbaren Bins (von mehreren offenen Bins mit exakt gleicher Restkapazität wird
+nur einer als Ast erzeugt - Optimum und Schranken bleiben unverändert). Der Effekt
+schwankt stark je Instanz: im Preset "Spürbare Symmetrie" (Seed 76) rund 11× (218
+statt 20 Knoten), im Preset "Größere Instanz" rund 5,6× (1338 statt 239), bei einer
+typischen Zufallsinstanz oft kaum ein Unterschied (Median über 80 Instanzen mit
+5 Typen, Bedarf ≤ 3: 1,09×; nur 11 von 80 mit ≥ 1,5×). Das ist der direkte Aufhänger
+für das nächste Stück dieser Linie, `cutting-stock-cutting-planes-demo`
 (Symmetrie-Schnitte).
+
+Hinweis zur Methode: Eine frühere Fassung verglich mit einer "Zwillingsinstanz"
+(jede Bedarfseinheit mit leicht verschobener Breite). Das maß nicht die Symmetrie,
+sondern verschob Passungen und damit die Wurzelschranke (im Preset 3 statt 4) und
+änderte auf einigen Instanzen sogar das Optimum. Mit passungserhaltend verschobenen
+Breiten ist der Suchbaum exakt derselbe - gleiche Breiten aufzubrechen berührt die
+Bin-Symmetrie nicht, die Suche vertauscht Bins, nicht Stücke.
 
 ## Ein überraschender Fund beim Kalibrieren: die "starke" Schranke hilft hier nicht
 
@@ -100,8 +113,10 @@ offen ließ. Damit ist diese siebenteilige Cutting-Stock-Linie vollständig.
 - **Bound-Gültigkeit**: beide Schranken unterschätzen nie die wahre minimale
   Bin-Anzahl (gegen erschöpfende Enumeration aller Vervollständigungen geprüft).
 - **Bruteforce-Cross-Check**: über viele Zufallsinstanzen und alle drei Presets.
-- **Symmetrie-Invariante**: die entsymmetrisierte Variante einer Instanz muss
-  dasselbe Optimum finden wie die Originalinstanz.
+- **Symmetrie-Invariante**: die Variante mit zusammengefassten Bins muss auf
+  derselben Instanz dasselbe Optimum und dieselbe Wurzelschranke haben wie die
+  normale Suche (gegen eine unabhängige Bitmasken-DP über mehrere hundert
+  Zufallsinstanzen geprüft) und darf nie mehr Knoten brauchen.
 - **Schranken-Äquivalenz-Invariante**: siehe oben - dauerhaft als Test verankert.
 - **Sicherheitsgrenzen**: `MAX_NODES_EXPLORED` wird zuverlässig eingehalten.
 
@@ -109,12 +124,12 @@ offen ließ. Damit ist diese siebenteilige Cutting-Stock-Linie vollständig.
 
 | Datei | Inhalt |
 |---|---|
-| `app.py` | Streamlit-Hauptablauf: Presets, Einstellungen, Suchbaum-Animation, Symmetrie-Vergleich, Formulierungs-Expander |
+| `app.py` | Streamlit-Hauptablauf: Presets, Einstellungen, Suchbaum-Animation, Symmetrie-Vergleich (zusammengefasste Bins), Formulierungs-Expander |
 | `csbb_constants.py` | Defaults, Regler-Grenzen, Sicherheitsgrenzen, `PRESETS` |
 | `csbb_presets.py` | `SettingSpec`/`SETTING_SPECS`, Permalink-Logik, Presets, Zufalls-Seed-Button |
-| `csbb_scenario.py` | Zufällige Cutting-Stock-Instanzen, Bin-Packing-Brücke, Entsymmetrisierung |
+| `csbb_scenario.py` | Zufällige Cutting-Stock-Instanzen, Bin-Packing-Brücke |
 | `csbb_bounds.py` | `weak_bound` (L1), `strong_bound` (mit dem oben beschriebenen Fund) |
-| `csbb_solver.py` | n-äre Tiefensuche mit vollständigem Knoten-Protokoll |
+| `csbb_solver.py` | n-äre Tiefensuche mit vollständigem Knoten-Protokoll (optional: `skip_equivalent_bins` für den Symmetrie-Vergleich) |
 | `csbb_bruteforce.py` | Unabhängige Referenzlösung (vollständige Enumeration) |
 | `csbb_evaluation.py` | Kennzahlen, Symmetrie-Vergleich |
 | `csbb_visualization.py` | Suchbaum-Diagramm (Plotly) |
@@ -139,6 +154,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Exakte Suche erklärt: Rucksack und Cutting Stock](https://sebastianhanisch.net/konzepte-exakte-suche.html).

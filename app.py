@@ -63,7 +63,7 @@ st.caption(
     "Anders als die Fall-Demos im Portfolio, die an einem Anwendungsfall mehrere Verfahren "
     "vergleichen, zeigt diese Demo - wie branch-bound-demo aus der ersten Exakte-Suche-Linie - "
     "ein Verfahren an einem wachsenden Beispiel. Bewusst ein zweites, komplexeres Vehikel-"
-    "Problem: die kommenden Stücke dieser Linie (Column Generation, Branch & Price) "
+    "Problem: die weiteren Stücke dieser Linie (Column Generation, Branch & Price) "
     "brauchen ein Problem, dessen Struktur reine Rucksack-Instanzen nicht hergeben."
 )
 
@@ -94,7 +94,7 @@ den bisher besten Fund nicht mehr unterbieten können - im Baum unten so beschri
 st.caption("🎯 Schnellstart – ein Beispielszenario laden:")
 PRESET_HELP = {
     "Winzige Instanz (Baum komplett sichtbar)": "3 Aufträge, je einmal - der komplette Suchbaum passt aufs Bild.",
-    "Spürbare Symmetrie (mehrere gleich breite Aufträge)": "Mehrere Aufträge derselben Breite - der Suchbaum ist hier über 12× größer, als er sein müsste, siehe der Vergleich weiter unten.",
+    "Spürbare Symmetrie (mehrere gleich breite Aufträge)": "Mehrere Aufträge mit Bedarf 3 - hier enthält der Suchbaum rund 11× so viele Knoten, wie ohne vertauschbare Bins nötig wären (Vergleich weiter unten). Ein Ausnahmefall: bei typischen Zufallsinstanzen ist der Effekt deutlich kleiner.",
     "Größere Instanz (der Baum wächst deutlich)": "6 Auftragstypen mit höherem Bedarf - der Suchbaum wächst spürbar, bleibt aber in Sekundenbruchteilen lösbar.",
 }
 preset_cols = st.columns(len(C.PRESETS))
@@ -217,10 +217,11 @@ st.markdown("---")
 st.subheader("📐 Wie viel kostet Symmetrie wirklich?")
 st.markdown(
     """
-Live für Ihre aktuelle Instanz: derselbe Suchlauf, einmal normal, einmal mit
-künstlich aufgebrochener Symmetrie (jedes Einzelstück wird zu seinem eigenen,
-winzig abweichenden Auftragstyp - die Packungsstruktur bleibt praktisch identisch,
-nur die exakte Gleichheit zwischen austauschbaren Stücken verschwindet).
+Live für Ihre aktuelle Instanz: derselbe Suchlauf mit derselben Schranke, einmal
+normal, einmal mit zusammengefassten austauschbaren Bins - von mehreren offenen Bins
+mit exakt gleicher Restkapazität wird nur noch einer als Ast erzeugt. Die Instanz
+bleibt dabei unverändert, und weder Schranken noch Optimum ändern sich: es
+verschwinden nur Äste, die Kopien eines schon durchsuchten Astes wären.
 """
 )
 
@@ -230,7 +231,7 @@ cc1.metric(
     "Normale Instanz", f"{cmp['normal_nodes']:,} Knoten" + (" (abgebrochen)" if cmp["normal_truncated"] else ""),
 )
 cc2.metric(
-    "Symmetrie aufgebrochen", f"{cmp['desym_nodes']:,} Knoten" + (" (abgebrochen)" if cmp["desym_truncated"] else ""),
+    "Austauschbare Bins zusammengefasst", f"{cmp['desym_nodes']:,} Knoten" + (" (abgebrochen)" if cmp["desym_truncated"] else ""),
     delta=f"{cmp['desym_nodes'] - cmp['normal_nodes']:,} ggü. normal", delta_color="inverse",
 )
 cc3.metric("Beide finden dasselbe Optimum", cmp["normal_best"])
@@ -241,13 +242,14 @@ if cmp["normal_best"] != cmp["desym_best"]:
 elif factor >= 1.5:
     st.success(
         f"✅ Bei dieser Instanz durchsucht die normale (symmetrische) Version **{factor:.1f}×** so viele "
-        f"Knoten wie die entsymmetrisierte - für dasselbe bewiesene Optimum. Der Unterschied ist reine "
-        f"Verschwendung: rein austauschbare Bin-Reihenfolgen, kein zusätzlicher Erkenntnisgewinn."
+        f"Knoten wie die Version mit zusammengefassten Bins - für dasselbe bewiesene Optimum. Der Unterschied "
+        f"sind rein austauschbare Bin-Reihenfolgen, kein zusätzlicher Erkenntnisgewinn. Wie stark das ausfällt, "
+        f"schwankt je nach Instanz stark; bei vielen Zufallsinstanzen ist es kaum ein Unterschied."
     )
 else:
     st.info(
         "Bei dieser Instanz macht sich Symmetrie kaum bemerkbar - probieren Sie das Preset "
-        "\"Spürbare Symmetrie\" oder mehrere Aufträge derselben Breite."
+        "\"Spürbare Symmetrie\" oder einen höheren Bedarf je Auftragstyp."
     )
 
 st.markdown("---")
@@ -287,6 +289,6 @@ st.markdown("---")
 
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Exakte Suche erklärt: Rucksack und Cutting Stock](https://sebastianhanisch.net/konzepte-exakte-suche.html)."
 )

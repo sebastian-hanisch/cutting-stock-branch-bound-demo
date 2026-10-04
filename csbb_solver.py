@@ -3,11 +3,18 @@ einem Rollentyp) - n-äre statt binäre Verzweigung wie in branch-bound-demo: an
 jedem Knoten wird das nächste Stück entweder in eines der bereits geöffneten Bins
 gelegt, in das es noch passt, oder ein neues Bin wird geöffnet.
 
-Bewusst KEINE Symmetrie-Mitigation (z. B. keine Regel, die zwei Bins mit
+Bewusst KEINE Symmetrie-Mitigation im Normalbetrieb (keine Regel, die zwei Bins mit
 identischer Restkapazität als redundante Optionen erkennt und zusammenfasst) -
 austauschbare Bins sind Bin Packings notorische, ehrliche Schwäche und sollen hier
 sichtbar bleiben, nicht vorab wegoptimiert werden. Siehe README für die Begründung
-und den direkten Aufhänger für das nächste Stück dieser Linie (Symmetrie-Schnitte)."""
+und den direkten Aufhänger für das nächste Stück dieser Linie (Symmetrie-Schnitte).
+
+Nur für den "Was kostet Symmetrie wirklich?"-Vergleich in app.py gibt es den Schalter
+`skip_equivalent_bins`: dieselbe Instanz, dieselbe Schranke, dieselbe Reihenfolge -
+aber von mehreren offenen Bins mit EXAKT gleicher Restkapazität wird nur das erste
+als Ast erzeugt. Das ändert weder Optimum noch Schranken (zwei solche Bins sind für
+alle künftigen Entscheidungen vertauschbar, die übersprungenen Äste wären isomorphe
+Kopien), entfernt also nur die Symmetrie."""
 
 from dataclasses import dataclass
 
@@ -37,7 +44,7 @@ class SolveResult:
     pieces: tuple
 
 
-def solve(instance, bound_fn, max_nodes=MAX_NODES_EXPLORED):
+def solve(instance, bound_fn, max_nodes=MAX_NODES_EXPLORED, skip_equivalent_bins=False):
     pieces = expand_pieces(instance)
     n = len(pieces)
     nodes = []
@@ -59,7 +66,12 @@ def solve(instance, bound_fn, max_nodes=MAX_NODES_EXPLORED):
         piece = pieces[depth]
 
         options = []
+        seen_caps = set()
         for i, cap in enumerate(bins):
+            if skip_equivalent_bins:
+                if cap in seen_caps:
+                    continue
+                seen_caps.add(cap)
             if cap >= piece:
                 new_bins = list(bins)
                 new_bins[i] -= piece

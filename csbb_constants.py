@@ -25,7 +25,7 @@ PRESETS = {
         "n_types": 3, "roll_width": 100, "max_demand": 1, "seed": 1,
     },
     "Spürbare Symmetrie (mehrere gleich breite Aufträge)": {
-        "n_types": 5, "roll_width": 100, "max_demand": 3, "seed": 30,
+        "n_types": 5, "roll_width": 100, "max_demand": 3, "seed": 76,
     },
     "Größere Instanz (der Baum wächst deutlich)": {
         "n_types": 6, "roll_width": 100, "max_demand": 4, "seed": 15,

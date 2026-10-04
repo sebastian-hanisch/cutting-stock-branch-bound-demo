@@ -34,24 +34,6 @@ def generate_instance(n_types, roll_width, max_demand, seed):
     )
 
 
-def desymmetrized_instance(instance, scale=1000):
-    """Dieselbe Instanz, aber jede Bedarfseinheit wird zu einem EIGENEN Auftragstyp
-    mit Bedarf 1 und einer winzigen, eindeutigen Breiten-Abweichung - bricht exakte
-    Gleichheit zwischen austauschbaren Stücken auf, ohne die Packungsstruktur
-    nennenswert zu verändern (Skalierung um `scale`, damit die Abweichung
-    verschwindend klein bleibt). Nur für den "Was kostet Symmetrie?"-Vergleich in
-    app.py - keine echte alternative Instanz, sondern ein Vergleichs-Experiment."""
-    widths = []
-    for w, q in zip(instance.item_widths, instance.item_demands):
-        for k in range(q):
-            widths.append(w * scale + k)
-    return CuttingStockInstance(
-        roll_width=instance.roll_width * scale,
-        item_widths=tuple(widths),
-        item_demands=tuple(1 for _ in widths),
-    )
-
-
 def expand_pieces(instance):
     """Bedarfsmengen zu individuellen Stück-Objekten expandiert, absteigend nach
     Breite sortiert (First-Fit-Decreasing-Reihenfolge) - die Brücke zu Bin Packing:
