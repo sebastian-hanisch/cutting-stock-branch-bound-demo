@@ -37,7 +37,8 @@ st.set_page_config(page_title="Cutting Stock Branch & Bound – Sebastian Hanisc
 def _compute_solve(n_types, roll_width, max_demand, seed):
     instance = generate_instance(n_types, roll_width, max_demand, seed)
     result = solve(instance, weak_bound)
-    true_optimum = solve_bruteforce(instance)
+    # Gegenprobe nur, wenn die Suche fertig wurde und die Enumeration bezahlbar bleibt (sonst None)
+    true_optimum = None if result.truncated else solve_bruteforce(instance, max_calls=C.MAX_BRUTEFORCE_CALLS)
     return instance, result, true_optimum
 
 
@@ -203,6 +204,11 @@ if result.truncated:
     st.error(
         f"⛔ Abgebrochen bei {C.MAX_NODES_EXPLORED:,} untersuchten Knoten - das gezeigte Ergebnis ist die "
         f"beste bislang gefundene, nicht garantiert optimale Lösung."
+    )
+elif true_optimum is None:
+    st.caption(
+        f"Bewiesenes Optimum: **{result.best_value}** Rollen. Die unabhängige Bruteforce-Gegenprobe entfällt bei dieser Größe "
+        f"(die vollständige Enumeration bräuchte Minuten)."
     )
 else:
     st.caption(

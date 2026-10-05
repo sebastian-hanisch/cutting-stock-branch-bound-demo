@@ -15,9 +15,14 @@ WIDTH_FRACTION_RANGE = (0.15, 0.6)
 
 # Bin-Packing-Suchbäume explodieren ohne Symmetrie-Mitigation (bewusst keine hier,
 # siehe README) schon bei winzigen Instanzen - per Stresstest kalibriert: bei
-# n_types=6/max_demand=4 wurden bis zu ~50.000 Knoten beobachtet (0.07s, unkritisch),
-# 100.000 lässt reichlich Sicherheitsabstand für die volle Reglerspanne.
+# n_types=6/max_demand=4 erreicht etwa jede zehnte Instanz die Grenze (22 von 240:
+# Seeds 0-59, Rollenbreiten 50/80/100/200); ein Lauf mit 100.000 Knoten dauert rund
+# 0,7 s. Die App zeigt das als "abgebrochen" an (keine bewiesene Optimalität).
 MAX_NODES_EXPLORED = 100_000
+# Die Bruteforce-Gegenprobe der App hat keine Schranke und braucht bei großen Instanzen
+# Minuten (gemessen bis 373 s bei 6 Typen, Bedarf 4, 23 Stücke); darum ein Aufrufbudget
+# (rund 1,6 Mio. Aufrufe je Sekunde): wird es überschritten, entfällt die Gegenprobe.
+MAX_BRUTEFORCE_CALLS = 500_000
 MAX_NODES_RENDERED = 800
 
 PRESETS = {
